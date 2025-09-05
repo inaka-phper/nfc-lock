@@ -16,10 +16,10 @@ class SwitchBotLock:
         device = devices[self.config.ble_mac].device
         return lock.SwitchbotLock(device, self.config.key_id, self.config.enc_key, model=SwitchbotModel.LOCK_PRO)
 
-    async def lock(self) -> Coroutine[Any, Any, bool]:
+    async def lock(self) -> bool:
         target = await self.searchDevice()
-        return target.lock()
+        return await target.lock()
 
-    async def unlock(self) -> Coroutine[Any, Any, bool]:
+    async def unlock(self) -> bool:
         target = await self.searchDevice()
-        return target.unlock()
+        return await target.unlock()
