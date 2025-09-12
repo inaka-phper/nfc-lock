@@ -12,8 +12,12 @@ class SwitchBotLock:
 
     async def searchDevice(self) -> SwitchbotLock:
         devices = await GetSwitchbotDevices().get_locks()
-        device = devices[self.config.ble_mac].device
-        return lock.SwitchbotLock(device, self.config.key_id, self.config.enc_key, model=SwitchbotModel.LOCK_PRO)
+
+        try:
+            device = devices[self.config.ble_mac].device
+            return lock.SwitchbotLock(device, self.config.key_id, self.config.enc_key, model=SwitchbotModel.LOCK_PRO)
+        except KeyError as e:
+            raise Exception("Device not found.")
 
     async def lock(self) -> bool:
         target = await self.searchDevice()
