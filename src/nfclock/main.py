@@ -58,7 +58,7 @@ async def run():
 
         # Lockを制御
         switchbotlock = SwitchBotLock(Config.env())
-        await switchbotlock.unlock()
+        await switchbotlock.toggle()
 
         time.sleep(5)
     except Exception as e:
