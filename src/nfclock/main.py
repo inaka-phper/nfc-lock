@@ -37,6 +37,7 @@ def listen():
 
 
 async def run():
+    stop = False
     try:
         # nfcを起動して待ち状態にする
         idm = listen()
@@ -63,9 +64,13 @@ async def run():
         time.sleep(5)
     except Exception as e:
         print(f"Unexpected error: {e}")
+    except KeyboardInterrupt:
+        print("KeyboardInterrupt")
+        stop = True
     finally:
         # リトライできるように何があっても再度待ち状態にする
-        await run()
+        if not stop:
+            await run()
 
 async def main() -> None:
     await run()
